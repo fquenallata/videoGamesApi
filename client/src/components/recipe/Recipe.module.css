@@ -1,0 +1,15 @@
+.recipeContainer {
+  display: flex;
+  flex-direction: column;
+  background-color: lightpink;
+  padding: 5px;
+  margin: 5px;
+  cursor: pointer;
+  opacity: 0.9;
+  transform: translateZ(0);
+  transition: transform 0.25s ease-out;
+}
+
+.recipeContainer:hover {
+  transform: scale(1.05);
+}
