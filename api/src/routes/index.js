@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
-const diets = require("./diets.js");
-const recipes = require("./recipes.js");
+const genres = require("./genres.js");
+const videogames = require("./videogames.js");
 
-router.use("/diets", diets);
-router.use("/recipes", recipes);
+router.use("/genres", genres);
+router.use("/videogames", videogames);
 //router.use("/recipes", recipes);
 
 module.exports = router;

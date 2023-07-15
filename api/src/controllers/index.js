@@ -1,6 +1,13 @@
-const getDiets = require("./getDiets.js");
-const postRecipes = require("./postRecipes.js");
-const getRecipeById = require("./getRecipeById.js");
-const getRecipeByName = require("./getRecipeByName.js");
+const getGenres = require("./getGenres.js");
+const getVideoGames = require("./getVideoGames.js");
+const getVideoGamesByName = require("./getVideoGamesByName.js");
+const getVideoGameById = require("./getVideoGameById.js");
+const postVideoGame = require("./postVideoGame.js");
 
-module.exports = { getDiets, postRecipes, getRecipeById, getRecipeByName };
+module.exports = {
+  getGenres,
+  getVideoGames,
+  getVideoGamesByName,
+  getVideoGameById,
+  postVideoGame,
+};

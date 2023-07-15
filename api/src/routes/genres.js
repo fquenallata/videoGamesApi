@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-const { getDiets } = require("../controllers");
+const { getGenres } = require("../controllers");
 
-router.get("/", getDiets);
+router.get("/", getGenres);
 
 module.exports = router;
