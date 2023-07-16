@@ -1,5 +1,9 @@
 const axios = require("axios");
-//retorna un  json con "title","image","types of diets"(esta de la tabla intermedia),"summary","healthScore", "instructions"
+const handleErrors = require("../utils/handleErrors.js");
+const { Genres } = require("../db.js");
+const { API_URL, API_KEY } = process.env;
+const URL = `${API_URL}/games/?key=${API_KEY}`;
+
 const getVideoGameById = async (req, res) => {
   // const { idRecipe } = req.params;
   // let recipe = await Recipe.findAll({

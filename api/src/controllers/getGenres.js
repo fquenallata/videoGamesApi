@@ -1,37 +1,44 @@
 const axios = require("axios");
+const handleErrors = require("../utils/handleErrors.js");
+const { Genres } = require("../db.js");
+const { API_URL, API_KEY } = process.env;
+const URL = `${API_URL}/genres?key=${API_KEY}`;
+
 const getGenres = async (req, res) => {
-  // try {
-  //   const dietsFromBD = await Diets.findAll();
-  //   if (dietsFromBD.length) {
-  //     res.status(200).json(dietsFromBD);
-  //   } else {
-  //     const allDietsFromApi = await getDietsFromApi();
-  //     let diets = allDietsFromApi.map((diet) => {
-  //       return { name: diet };
-  //     });
-  //     diets = await Diets.bulkCreate(diets);
-  //     res.status(200).json(diets);
-  //   }
-  // } catch (error) {
-  //   res.status(404).json({ error: error.message });
-  // }
-  res.status(404).json({ error: "hola" });
+  try {
+    const genresFromBD = await handleErrors(
+      Genres.findAll(),
+      "Error retrieving genres from the database"
+    );
+
+    if (genresFromBD.length) {
+      res.status(200).json(genresFromBD);
+    } else {
+      let genresFromAPI = await getGenresFromApi();
+      genresFromAPI = await handleErrors(
+        Genres.bulkCreate(genresFromAPI),
+        "Error initializing genres in the database"
+      );
+      res.status(201).json(genresFromAPI);
+    }
+  } catch (error) {
+    res.status(404).json({
+      error: error.message,
+    });
+  } //
 };
-// const getDietsFromApi = async () => {
-//   try {
-//     const { data } = await axios.get(URL);
-//     let diets = [];
 
-//     for (let i = 0; i < data.results.length; i++) {
-//       diets = [...data.results[i].diets, ...diets];
-//     }
+const getGenresFromApi = async () => {
+  try {
+    const { data } = await axios.get(URL);
+    //aca los preparo para el bulk
+    const genresFromApi = data.results.map((genre) => ({
+      name: genre.name,
+    }));
+    return genresFromApi;
+  } catch (error) {
+    throw new Error("Error retrieving data from the API");
+  }
+};
 
-//     const dietsSet = new Set(diets);
-//     diets = [...dietsSet];
-
-//     return diets;
-//   } catch (error) {
-//     throw new Error(error.message);
-//   }
-// };
 module.exports = getGenres;
