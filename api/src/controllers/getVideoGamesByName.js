@@ -39,7 +39,12 @@ const getVideoGamesByName = async (req, res) => {
       name,
       apiPageSize
     );
-    res.status(200).json([...videoGamesFromBD, ...videoGamesFromAPI]);
+    const videoGamesMerged = [...videoGamesFromBD, ...videoGamesFromAPI];
+    if (videoGamesMerged.length) {
+      res.status(200).json(videoGamesMerged);
+    } else {
+      res.status(404).json({ error: "No data for that ID or wrong ID" });
+    }
   } catch (error) {
     res.status(404).json({
       error: error.message,

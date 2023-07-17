@@ -18,10 +18,16 @@ const getVideoGameByIdFromApi = async (id) => {
   try {
     const URL = `${API_URL}/games/${id}?key=${API_KEY}`;
     const { data } = await axios.get(URL);
-    const platformFiltered = data.platforms.map(
-      (platforms) => platforms.platform.name
-    );
-    const genresFiltered = data.genres.map((genre) => genre.name);
+    let platformFiltered = [];
+    if (data.platforms.length) {
+      platformFiltered = data.platforms.map(
+        (platforms) => platforms.platform.name
+      );
+    }
+    let genresFiltered = [];
+    if (data.genres.length) {
+      genresFiltered = data.genres.map((genre) => genre.name);
+    }
     const videogame = [
       {
         id: data.id,
@@ -44,12 +50,17 @@ const getVideoGamesFromApi = async () => {
   try {
     const URL = `${API_URL}/games?key=${API_KEY}`;
     const { data } = await axios.get(URL);
-
     const videogamesFormmated = data.results.map((videogame) => {
-      const platformFiltered = videogame.platforms.map(
-        (platforms) => platforms.platform.name
-      );
-      const genresFiltered = videogame.genres.map((genre) => genre.name);
+      let platformFiltered = [];
+      if (videogame.platforms) {
+        platformFiltered = videogame.platforms.map(
+          (platform) => platform.platform.name
+        );
+      }
+      let genresFiltered = [];
+      if (videogame.genres) {
+        genresFiltered = videogame.genres.map((genre) => genre.name);
+      }
       return {
         id: videogame.id,
         name: videogame.name,
@@ -62,7 +73,7 @@ const getVideoGamesFromApi = async () => {
     });
     return videogamesFormmated;
   } catch (error) {
-    throw new Error(error.message);
+    throw new Error("Error retrieving data from the API");
   }
 };
 
@@ -74,10 +85,16 @@ const getVideoGamesByNameFromApi = async (name, apiPageSize) => {
     const URL = `${API_URL}/games?key=${API_KEY}&search=${name}&page_size=${apiPageSize}`;
     const { data } = await axios.get(URL);
     const videogamesFormmated = data.results.map((videogame) => {
-      const platformFiltered = videogame.platforms.map(
-        (platforms) => platforms.platform.name
-      );
-      const genresFiltered = videogame.genres.map((genre) => genre.name);
+      let platformFiltered = [];
+      if (videogame.platforms) {
+        platformFiltered = videogame.platforms.map(
+          (platform) => platform.platform.name
+        );
+      }
+      let genresFiltered = [];
+      if (videogame.genres) {
+        genresFiltered = videogame.genres.map((genre) => genre.name);
+      }
       return {
         id: videogame.id,
         name: videogame.name,
@@ -90,7 +107,7 @@ const getVideoGamesByNameFromApi = async (name, apiPageSize) => {
     });
     return videogamesFormmated;
   } catch (error) {
-    throw new Error(error.message);
+    throw new Error("Error retrieving data from the API");
   }
 };
 
