@@ -1,71 +1,49 @@
-const axios = require("axios");
 const { Op } = require("sequelize");
+const { VideoGames, Genres } = require("../db.js");
+const handleErrors = require("../utils/handleErrors.js");
+const { getVideoGamesByNameFromApi } = require("../utils/getsFromApi.js");
 
 const getVideoGamesByName = async (req, res) => {
-  // let { name } = req.query;
-  // name = name.toLowerCase();
-  // try {
-  //   let recipes = await Recipe.findAll({
-  //     attributes: [
-  //       "id",
-  //       "title",
-  //       "image",
-  //       "summary",
-  //       "healthScore",
-  //       "instructions",
-  //     ],
-  //     where: {
-  //       title: {
-  //         [Op.like]: `%${name}%`,
-  //       },
-  //     },
-  //     include: [
-  //       {
-  //         model: Diets,
-  //         attributes: ["name"],
-  //         through: { attributes: [] },
-  //       },
-  //     ],
-  //   });
-  //   if (recipes.length) {
-  //     recipes = recipes.map((recipe) => {
-  //       const { Diets, ...recipePropertys } = recipe.toJSON();
-  //       return {
-  //         ...recipePropertys,
-  //         diets: Diets.map((diet) => diet.name),
-  //       };
-  //     });
-  //   }
-  //   const { data } = await axios.get(
-  //     `http://localhost:8080/recipes/complexSearch?addRecipeInformation=true&number=100&apiKey=${API_KEY}`
-  //   );
-  //   const allRecipes = data.results;
-  //   let recipesFiltered = allRecipes.filter((recipe) =>
-  //     recipe.title.toLowerCase().includes(name)
-  //   );
-  //   recipesFiltered = recipesFiltered.map((recipe) => {
-  //     let instructions = [];
-  //     if (recipe.analyzedInstructions.length) {
-  //       instructions = recipe.analyzedInstructions[0].steps.map(
-  //         (instruction) => instruction.step
-  //       );
-  //     }
-  //     return {
-  //       id: recipe.id,
-  //       title: recipe.title,
-  //       image: recipe.image,
-  //       summary: recipe.summary,
-  //       healthScore: recipe.healthScore,
-  //       instructions: instructions.join(" "),
-  //       diets: recipe.diets,
-  //     };
-  //   });
-  //   res.status(200).json([...recipes, ...recipesFiltered]);
-  // } catch (error) {
-  //   res
-  //     .status(404)
-  //     .json({ message: "hola, necesitas ver mas sobre manejo de errores" });
-  // }
-  res.status(404).json({ error: "hola3" });
+  let { name } = req.query;
+
+  try {
+    let videoGamesFromBD = await handleErrors(
+      VideoGames.findAll({
+        where: {
+          name: {
+            [Op.iLike]: `%${name}%`,
+          },
+        },
+        include: [
+          {
+            model: Genres,
+            attributes: ["name"],
+            through: { attributes: [] },
+            as: "genres",
+          },
+        ],
+      }),
+      "Error retrieving videogames from the database"
+    );
+    if (videoGamesFromBD.length) {
+      videoGamesFromBD = videoGamesFromBD.map((game) => {
+        const { genres, ...gameProps } = game.toJSON();
+        return {
+          ...gameProps,
+          genres: genres.map((genre) => genre.name),
+        };
+      });
+    }
+    const apiPageSize = 15 - videoGamesFromBD.length;
+    const videoGamesFromAPI = await getVideoGamesByNameFromApi(
+      name,
+      apiPageSize
+    );
+    res.status(200).json([...videoGamesFromBD, ...videoGamesFromAPI]);
+  } catch (error) {
+    res.status(404).json({
+      error: error.message,
+    });
+  }
 };
 module.exports = getVideoGamesByName;

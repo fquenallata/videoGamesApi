@@ -39,8 +39,10 @@ sequelize.models = Object.fromEntries(capsEntries);
 // Para relacionarlos hacemos un destructuring
 const { VideoGames, Genres } = sequelize.models;
 // Aca vendrian las relaciones
+//Averiguar como agregar alias
 VideoGames.belongsToMany(Genres, {
   through: "VideoGamesXGenres",
+  as: "genres",
 });
 Genres.belongsToMany(VideoGames, {
   through: "VideoGamesXGenres",

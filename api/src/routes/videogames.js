@@ -10,7 +10,7 @@ const {
 
 router.get("/", getVideoGames);
 router.get("/search", getVideoGamesByName);
-router.get("/:idVideogame", getVideoGameById);
+router.get("/:idvideogame", getVideoGameById);
 router.post("/", postVideoGame);
 
 module.exports = router;

@@ -1,8 +1,6 @@
-const axios = require("axios");
 const handleErrors = require("../utils/handleErrors.js");
+const { getGenresFromApi } = require("../utils/getsFromApi.js");
 const { Genres } = require("../db.js");
-const { API_URL, API_KEY } = process.env;
-const URL = `${API_URL}/genres?key=${API_KEY}`;
 
 const getGenres = async (req, res) => {
   try {
@@ -26,19 +24,6 @@ const getGenres = async (req, res) => {
       error: error.message,
     });
   } //
-};
-
-const getGenresFromApi = async () => {
-  try {
-    const { data } = await axios.get(URL);
-    //aca los preparo para el bulk
-    const genresFromApi = data.results.map((genre) => ({
-      name: genre.name,
-    }));
-    return genresFromApi;
-  } catch (error) {
-    throw new Error("Error retrieving data from the API");
-  }
 };
 
 module.exports = getGenres;

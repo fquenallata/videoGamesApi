@@ -1,55 +1,47 @@
-const axios = require("axios");
 const handleErrors = require("../utils/handleErrors.js");
-const { Genres } = require("../db.js");
-const { API_URL, API_KEY } = process.env;
-const URL = `${API_URL}/games/?key=${API_KEY}`;
+const { getVideoGameByIdFromApi } = require("../utils/getsFromApi");
+const { VideoGames, Genres } = require("../db.js");
 
 const getVideoGameById = async (req, res) => {
-  // const { idRecipe } = req.params;
-  // let recipe = await Recipe.findAll({
-  //   attributes: [
-  //     "id",
-  //     "title",
-  //     "image",
-  //     "summary",
-  //     "healthScore",
-  //     "instructions",
-  //   ],
-  //   where: { id: idRecipe },
-  //   include: [
-  //     {
-  //       model: Diets,
-  //       attributes: ["name"],
-  //       through: { attributes: [] },
-  //     },
-  //   ],
-  // });
-  // if (recipe.length) {
-  //   const { Diets, ...recipePropertys } = recipe[0].toJSON();
-  //   recipe = {
-  //     ...recipePropertys,
-  //     diets: Diets.map((diet) => diet.name),
-  //   };
-  //   res.status(200).json(recipe);
-  // } else {
-  //   try {
-  //     const { data } = await axios.get(
-  //       `http://localhost:8080/recipes/${idRecipe}/information`
-  //     );
-  //     const recipeFiltered = {
-  //       id: data.id,
-  //       title: data.title,
-  //       image: data.image,
-  //       summary: data.summary,
-  //       healthScore: data.healthScore,
-  //       instructions: data.instructions,
-  //       diets: data.diets,
-  //     };
-  //     res.status(200).json(recipeFiltered);
-  //   } catch (error) {
-  //     res.status(404).json({ message: "No data for that ID or wrong ID" });
-  //   }
-  // }
-  res.status(404).json({ error: "hola1" });
+  const { idvideogame } = req.params;
+  try {
+    if (idvideogame.length < 32) {
+      const videogameFromAPI = await getVideoGameByIdFromApi(idvideogame);
+      if (videogameFromAPI.length) {
+        res.status(200).json(videogameFromAPI);
+      } else {
+        res.status(404).json({ error: "No data for that ID or wrong ID" });
+      }
+    } else {
+      let videoGameFromBD = await handleErrors(
+        VideoGames.findAll({
+          where: { id: idvideogame },
+          include: [
+            {
+              model: Genres,
+              attributes: ["name"],
+              through: { attributes: [] },
+              as: "genres",
+            },
+          ],
+        }),
+        "Error retrieving videogames from the database"
+      );
+      if (videoGameFromBD.length) {
+        videoGameFromBD = videoGameFromBD[0].toJSON();
+        videoGameFromBD.genres = videoGameFromBD.genres.map(
+          (genre) => genre.name
+        );
+        res.status(200).json(videoGameFromBD);
+      } else {
+        res.status(404).json({ error: "No data for that ID or wrong ID" });
+      }
+    }
+  } catch (error) {
+    res.status(404).json({
+      error: error.message,
+    });
+  }
 };
+
 module.exports = getVideoGameById;
