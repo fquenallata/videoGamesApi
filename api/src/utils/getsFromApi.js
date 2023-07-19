@@ -48,9 +48,13 @@ const getVideoGameByIdFromApi = async (id) => {
 
 const getVideoGamesFromApi = async () => {
   try {
-    const URL = `${API_URL}/games?key=${API_KEY}`;
-    const { data } = await axios.get(URL);
-    const videogamesFormmated = data.results.map((videogame) => {
+    const URL = `${API_URL}/games?key=${API_KEY}&page_size=33`;
+    let allVideoGames = [];
+    for (let i = 1; i <= 3; i++) {
+      const { data } = await axios.get(`${URL}&page=${i}`);
+      allVideoGames = [...allVideoGames, ...data.results];
+    }
+    const videogamesFormmated = allVideoGames.map((videogame) => {
       let platformFiltered = [];
       if (videogame.platforms) {
         platformFiltered = videogame.platforms.map(
