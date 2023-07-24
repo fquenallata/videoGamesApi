@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function videogames(props) {
+function VideoGames(props) {
   // const { allRecipes } = props;
   // const [currentPage, setCurrentPage] = useState(1);
   // const recipesPerPage = 9;
@@ -33,4 +33,4 @@ function videogames(props) {
   );
 }
 
-export default videogames;
+export default VideoGames;

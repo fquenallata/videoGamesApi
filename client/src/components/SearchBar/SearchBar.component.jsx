@@ -1,4 +1,4 @@
-function VideoGame(props) {
+function SearchBar(props) {
   return (
     <div>
       <p>Esto es una receta</p>
@@ -6,4 +6,4 @@ function VideoGame(props) {
   );
 }
 
-export default VideoGame;
+export default SearchBar;
