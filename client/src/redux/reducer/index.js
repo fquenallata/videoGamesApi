@@ -1,14 +1,15 @@
-import { GET_RECIPES } from "../actions/types.js";
+import { GET_VIDEOGAMES } from "../actions/types.js";
 
-let initialState = { allRecipes: [], allRecipesCopy: [], posts: [] };
+let initialState = { allVideoGames: [], allVideoGamesCopy: [] };
 
 function rootReducer(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
-    case GET_RECIPES:
+    case GET_VIDEOGAMES:
       return {
         ...state,
-        allRecipes: payload,
+        allVideoGames: payload,
+        allVideoGamesCopy: payload,
       };
 
     default:

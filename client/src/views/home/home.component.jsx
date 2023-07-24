@@ -1,5 +1,5 @@
 // import NavBar from "../../components/NavBar/NavBar.component.jsx";
-// import Recipes from "../../components/Recipes/Recipes.component.jsx";
+import VideoGames from "../../components/VideoGames/VideoGames.component.jsx";
 // import { useEffect, useState } from "react";
 // import { useDispatch, useSelector } from "react-redux";
 // import { getRecipes } from "../../redux/actions/actions.js";

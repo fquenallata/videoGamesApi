@@ -1,9 +1,8 @@
 //views
-import Home from "./views/home/home.component.jsx";
-import Detail from "./views/detail/detail.component.jsx";
-import Landing from "./views/landing/landing.component.jsx";
-import Form from "./views/form/form.component.jsx";
-//routes
+import Home from "./views/Home/Home.component.jsx";
+import Detail from "./views/Detail/Detail.component.jsx";
+import Landing from "./views/Landing/Landing.component.jsx";
+import Create from "./views/Create/Create.component.jsx";
 import { Routes, Route } from "react-router-dom";
 function App() {
   return (
@@ -12,7 +11,7 @@ function App() {
         <Route exact path="/" element={<Landing />} />
         <Route path="/home" element={<Home />} />
         <Route path="/detail/:detailId" element={<Detail />} />
-        <Route path="/post" element={<Form />} />
+        <Route path="/post" element={<Create />} />
       </Routes>
     </>
   );

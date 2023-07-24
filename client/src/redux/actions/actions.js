@@ -1,13 +1,11 @@
-import { GET_RECIPES } from "./types.js";
+import { GET_VIDEOGAMES } from "./types.js";
 import axios from "axios";
 
-export function getRecipes() {
+export function getVideoGames() {
   return async function (dispatch) {
-    const { data } = await axios.get(
-      "http://localhost:3001/recipes/search?name"
-    );
+    const { data } = await axios.get("http://localhost:3001/videogames");
     return dispatch({
-      type: GET_RECIPES,
+      type: GET_VIDEOGAMES,
       payload: data,
     });
   };

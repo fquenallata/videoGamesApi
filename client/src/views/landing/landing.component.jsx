@@ -1,7 +1,7 @@
 function Landing() {
   return (
     <div>
-      <p>Estas en el Landing</p>
+      <p>hi, its adore again</p>
     </div>
   );
 }

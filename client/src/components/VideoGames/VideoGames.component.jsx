@@ -1,7 +1,6 @@
-import styles from "./Recipes.module.css";
 import { useState } from "react";
 
-function Recipes(props) {
+function videogames(props) {
   // const { allRecipes } = props;
   // const [currentPage, setCurrentPage] = useState(1);
   // const recipesPerPage = 9;
@@ -29,9 +28,9 @@ function Recipes(props) {
   // }
   return (
     <div>
-      <p>Estas son recetas</p>
+      <p>Estos son videojuegos</p>
     </div>
   );
 }
 
-export default Recipes;
+export default videogames;
