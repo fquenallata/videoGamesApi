@@ -1,5 +1,8 @@
 body {
   margin: 0;
+  padding: 0;
+  width: 100vw; /* Ancho del viewport (pantalla) */
+  height: 100vh; /* Altura del viewport (pantalla) */
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;

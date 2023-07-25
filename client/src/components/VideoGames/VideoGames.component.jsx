@@ -28,7 +28,7 @@ function VideoGames(props) {
   // }
   return (
     <div>
-      <p>Estos son videojuegos</p>
+      <p>Estos son VideoGames</p>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 function FilterBar(props) {
   return (
     <div>
-      <p>Esto es una receta</p>
+      <p>Esto es un FilterBar</p>
     </div>
   );
 }

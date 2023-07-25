@@ -1,7 +1,7 @@
 function VideoGame(props) {
   return (
     <div>
-      <p>Esto es una receta</p>
+      <p>Esto es un VideoGame</p>
     </div>
   );
 }

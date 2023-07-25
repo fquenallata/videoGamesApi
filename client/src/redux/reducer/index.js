@@ -1,4 +1,4 @@
-import { GET_VIDEOGAMES } from "../actions/types.js";
+import { GET_VIDEOGAMES, GET_VIDEOGAMES_BY_NAME } from "../actions/types.js";
 
 let initialState = { allVideoGames: [], allVideoGamesCopy: [] };
 
@@ -10,6 +10,12 @@ function rootReducer(state = initialState, action) {
         ...state,
         allVideoGames: payload,
         allVideoGamesCopy: payload,
+      };
+
+    case GET_VIDEOGAMES_BY_NAME:
+      return {
+        ...state,
+        allVideoGames: payload,
       };
 
     default:

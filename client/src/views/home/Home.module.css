@@ -1,0 +1,11 @@
+.homeContainer {
+  display: grid;
+  grid-template-rows: auto 1fr; /* Dos filas: la primera con contenido automático y la segunda con el resto del espacio disponible */
+  height: 100vh; /* Ocupa toda la altura del viewport (pantalla) */
+}
+
+.contentContainer {
+  display: grid;
+  grid-template-columns: 1fr 5fr; /* Dos columnas: la primera con una sexta parte del ancho y la segunda con el resto del espacio */
+  gap: 10px; /* Puedes ajustar el espacio entre los componentes según tus necesidades */
+}
