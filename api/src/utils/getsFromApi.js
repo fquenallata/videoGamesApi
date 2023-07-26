@@ -68,7 +68,7 @@ const getVideoGamesFromApi = async () => {
       return {
         id: videogame.id,
         name: videogame.name,
-        platform: platformFiltered,
+        platforms: platformFiltered,
         image: videogame.background_image,
         release_date: videogame.released,
         rating: videogame.rating,

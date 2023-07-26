@@ -1,34 +1,42 @@
 import { useState } from "react";
+import VideoGame from "../VideoGame/VideoGame.component.jsx";
+import styles from "./VideoGames.module.css";
 
 function VideoGames(props) {
-  // const { allRecipes } = props;
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const recipesPerPage = 9;
-  // const totalPages = Math.ceil(allRecipes.length / recipesPerPage);
+  const { allVideoGames } = props;
+  const [currentPage, setCurrentPage] = useState(1);
+  const videoGamesPerPage = 15;
+  const totalPages = Math.ceil(allVideoGames.length / videoGamesPerPage);
 
-  // const getRecipesForPage = (page) => {
-  //   const startIndex = (page - 1) * recipesPerPage;
-  //   const endIndex = startIndex + recipesPerPage;
-  //   return allRecipes.slice(startIndex, endIndex);
-  // };
+  const getVideoGamesForPage = (page) => {
+    const startIndex = (page - 1) * videoGamesPerPage;
+    const endIndex = startIndex + videoGamesPerPage;
+    return allVideoGames.slice(startIndex, endIndex);
+  };
 
-  // const handlePage = (page) => {
-  //   setCurrentPage(page);
-  // };
+  const handlePage = (page) => {
+    setCurrentPage(page);
+  };
 
-  // const currentRecipes = getRecipesForPage(currentPage);
+  const currentVideoGames = getVideoGamesForPage(currentPage);
 
-  // const pageButtons = [];
-  // for (let i = 1; i <= totalPages; i++) {
-  //   pageButtons.push(
-  //     <button key={i} onClick={() => handlePage(i)}>
-  //       {i}
-  //     </button>
-  //   );
-  // }
+  const pageButtons = [];
+  for (let i = 1; i <= totalPages; i++) {
+    pageButtons.push(
+      <button key={i} onClick={() => handlePage(i)}>
+        {i}
+      </button>
+    );
+  }
+
   return (
-    <div>
-      <p>Estos son VideoGames</p>
+    <div className={styles.videoGamesContainer}>
+      <div className={styles.videoGamesList}>
+        {currentVideoGames.map((videoGame) => (
+          <VideoGame key={videoGame.id} videoGame={videoGame} />
+        ))}
+      </div>
+      <div className={styles.buttonsContainer}>{pageButtons}</div>
     </div>
   );
 }

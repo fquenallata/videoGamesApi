@@ -38,8 +38,8 @@ function Home() {
     <div className={styles.homeContainer}>
       <SearchBar handleChange={handleChange} handleSubmit={handleSubmit} />
       <div className={styles.contentContainer}>
-        <FilterBar />
-        <VideoGames />
+        <FilterBar allVideoGames={allVideoGames} />
+        <VideoGames allVideoGames={allVideoGames} />
       </div>
     </div>
   );

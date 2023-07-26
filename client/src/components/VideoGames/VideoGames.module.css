@@ -1,13 +1,19 @@
-.recipeList {
+.videoGamesList {
   width: 85vw;
-  margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 20px;
+  justify-content: center;
+  align-items: center;
+  justify-items: center; /* Agregar esta línea */
 }
 
 .buttonsContainer {
   display: flex;
   justify-content: center;
   margin-top: 20px;
+}
+
+.videoGamesContainer {
+  background-color: rgba(0, 0, 0, 0.55);
 }

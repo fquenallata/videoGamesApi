@@ -1,0 +1,53 @@
+.filterBarContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.filterBarContainer h4 {
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #f5f5dc;
+}
+
+.filterBarContainer p {
+  font-size: 12px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  text-align: center;
+  font-style: italic;
+  font-weight: 400;
+  color: #f5f5dc;
+}
+
+.filterBarContainer select {
+  border: none;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 120px;
+  margin-bottom: 10px;
+  font-family: "Roboto", sans-serif;
+  font-size: 11px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: rgba(245, 245, 220, 0.8);
+  text-align-last: center;
+  font-weight: bold;
+  height: 20px;
+}
+
+.filterBarContainer select option {
+  border: none;
+  text-align: center;
+  font-weight: bold;
+}
+
+.filterBarContainer select:focus {
+  outline: none;
+}
+
+.filterBarContainer select:hover {
+  outline: none;
+}

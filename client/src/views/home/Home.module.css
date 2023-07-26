@@ -1,11 +1,29 @@
+/* Estilos para el componente homeContainer */
 .homeContainer {
   display: grid;
-  grid-template-rows: auto 1fr; /* Dos filas: la primera con contenido automático y la segunda con el resto del espacio disponible */
-  height: 100vh; /* Ocupa toda la altura del viewport (pantalla) */
+  grid-template-rows: auto 1fr;
+  min-height: 100vh; /* Cambiamos 'height' por 'min-height' */
+  background: linear-gradient(45deg, #ffc13b 16%, #ff007f, #00ffcc 84%);
+  background-size: 400% 400%;
+  animation: gradientAnimation 15s ease infinite;
 }
 
+/* Estilos para el contenido dentro del componente */
 .contentContainer {
   display: grid;
-  grid-template-columns: 1fr 5fr; /* Dos columnas: la primera con una sexta parte del ancho y la segunda con el resto del espacio */
-  gap: 10px; /* Puedes ajustar el espacio entre los componentes según tus necesidades */
+  grid-template-columns: minmax(140px, 1fr) 5fr;
+  min-height: 100vh; /* Agregamos 'min-height' */
+}
+
+/* Animación para el fondo gradiente */
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
