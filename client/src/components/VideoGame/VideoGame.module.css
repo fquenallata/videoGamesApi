@@ -1,12 +1,28 @@
+.link {
+  width: 100%;
+}
+
 .card {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 240px;
-  height: 250px;
-  background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 180px;
+  border: 1px black solid;
+  background-color: rgba(0, 0, 0, 0.4);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   overflow: hidden;
+  --hover: #ffffff;
+  transition: 0.25s;
+  cursor: pointer;
+}
+
+.card:hover,
+.card:focus {
+  box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
+  transform: translateY(-0.25em);
+  border-color: var(--hover);
+  color: #fff;
 }
 
 .imageContainer {
@@ -35,8 +51,15 @@
   background-color: rgba(0, 0, 0, 0.2);
 }
 
-.platforms {
-  margin: 0;
-  font-size: 14px;
-  color: #aaa;
+.genres {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3px;
+  font-family: "Roboto", sans-serif;
+  color: rgba(245, 237, 220, 0.9);
+  font-weight: bold;
+  font-size: 11px;
+  padding: 5px;
+  width: 90%;
 }

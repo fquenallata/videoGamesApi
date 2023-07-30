@@ -41,7 +41,6 @@
 .filterBarContainer select option {
   border: none;
   text-align: center;
-  font-weight: bold;
 }
 
 .filterBarContainer select:focus {

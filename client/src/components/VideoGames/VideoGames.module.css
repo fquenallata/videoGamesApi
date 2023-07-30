@@ -1,17 +1,18 @@
 .videoGamesList {
-  width: 85vw;
+  width: 82vw;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-gap: 20px;
   justify-content: center;
   align-items: center;
   justify-items: center; /* Agregar esta línea */
+  padding: 20px;
 }
 
 .buttonsContainer {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 15px;
 }
 
 .videoGamesContainer {
