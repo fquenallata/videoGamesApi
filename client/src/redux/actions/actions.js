@@ -1,4 +1,8 @@
-import { GET_VIDEOGAMES, GET_VIDEOGAMES_BY_NAME } from "./types.js";
+import {
+  GET_VIDEOGAMES,
+  GET_VIDEOGAMES_BY_NAME,
+  GET_VIDEOGAMES_BY_ID,
+} from "./types.js";
 import axios from "axios";
 
 export function getVideoGames() {
@@ -18,6 +22,16 @@ export function getVideoGamesByName(name) {
     );
     return dispatch({
       type: GET_VIDEOGAMES_BY_NAME,
+      payload: data,
+    });
+  };
+}
+
+export function getVideoGamesById(id) {
+  return async function (dispatch) {
+    const { data } = await axios.get(`http://localhost:3001/videogames/${id}`);
+    return dispatch({
+      type: GET_VIDEOGAMES_BY_ID,
       payload: data,
     });
   };

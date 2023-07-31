@@ -32,7 +32,6 @@ function Home() {
   useEffect(() => {
     dispatch(getVideoGames());
   }, []);
-  console.log(allVideoGames);
 
   return (
     <div className={styles.homeContainer}>
