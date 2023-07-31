@@ -2,6 +2,7 @@ import {
   GET_VIDEOGAMES,
   GET_VIDEOGAMES_BY_NAME,
   GET_VIDEOGAMES_BY_ID,
+  POST_VIDEOGAME,
 } from "../actions/types.js";
 
 let initialState = { allVideoGames: [], allVideoGamesCopy: [] };
@@ -27,6 +28,12 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         allVideoGames: payload,
+      };
+
+    case POST_VIDEOGAME:
+      return {
+        ...state,
+        allRecipes: payload,
       };
 
     default:
