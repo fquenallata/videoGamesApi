@@ -1,8 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styles from "./Detail.module.css";
 import { getVideoGamesById } from "../../redux/actions/actions.js";
+import image_not_found from "./image_not_found.jpg";
 
 function Detail() {
   const dispatch = useDispatch();
@@ -12,6 +13,10 @@ function Detail() {
   useEffect(() => {
     dispatch(getVideoGamesById(detailId));
   }, []);
+
+  const handleImageError = (event) => {
+    event.target.src = image_not_found; // Usa la imagen de emergencia en caso de error
+  };
 
   const { description, genres, image, name, platforms, rating, release_date } =
     videoGame[0];
@@ -23,7 +28,12 @@ function Detail() {
     <div className={styles.detailContainer}>
       <div className={styles.contentContainer}>
         <div className={styles.imageContainer}>
-          <img className={styles.image} src={image} alt={name} />
+          <img
+            className={styles.image}
+            src={image}
+            alt={name}
+            onError={handleImageError}
+          />
         </div>
         <div className={styles.dataContainer}>
           <div className={styles.extraInfo}>

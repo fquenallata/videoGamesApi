@@ -32,7 +32,7 @@ const getVideoGameById = async (req, res) => {
         videoGameFromBD.genres = videoGameFromBD.genres.map(
           (genre) => genre.name
         );
-        res.status(200).json(videoGameFromBD);
+        res.status(200).json([videoGameFromBD]);
       } else {
         res.status(404).json({ error: "No data for that ID or wrong ID" });
       }

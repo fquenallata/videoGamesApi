@@ -93,10 +93,18 @@ export function getVideoGamesByName(name) {
 
 export function getVideoGamesById(id) {
   return async function (dispatch) {
-    const { data } = await axios.get(`http://localhost:3001/videogames/${id}`);
-    return dispatch({
-      type: GET_VIDEOGAMES_BY_ID,
-      payload: data,
-    });
+    try {
+      const { data } = await axios.get(
+        `http://localhost:3001/videogames/${id}`
+      );
+      return dispatch({
+        type: GET_VIDEOGAMES_BY_ID,
+        payload: data,
+      });
+    } catch (error) {
+      throw new Error(
+        `Error fetching video game with ID ${id}: ${error.message}`
+      );
+    }
   };
 }
