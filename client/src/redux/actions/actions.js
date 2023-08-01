@@ -4,10 +4,10 @@ import {
   GET_VIDEOGAMES_BY_ID,
   POST_VIDEOGAME,
   RESET_FILTERS,
-  FILTER_VIDEOGAMES_BY_RATING,
-  FILTER_VIDEOGAMES_ALPHATICALLY,
+  ORDER_VIDEOGAMES_BY_RATING,
+  ORDER_VIDEOGAMES_ALPHATICALLY,
   FILTER_VIDEOGAMES_BY_ORIGIN,
-  FILTER_VIDEOGAMES_BY_GENRE,
+  ORDER_VIDEOGAMES_BY_GENRE,
 } from "./types.js";
 import axios from "axios";
 
@@ -33,19 +33,19 @@ export function resetFilters() {
   };
 }
 
-export function filterVideoGamesByRating(option) {
+export function orderVideoGamesByRating(option) {
   return function (dispatch) {
     return dispatch({
-      type: FILTER_VIDEOGAMES_BY_RATING,
+      type: ORDER_VIDEOGAMES_BY_RATING,
       payload: option,
     });
   };
 }
 
-export function filterVideoGamesAlphabetically(option) {
+export function orderVideoGamesAlphabetically(option) {
   return function (dispatch) {
     return dispatch({
-      type: FILTER_VIDEOGAMES_ALPHATICALLY,
+      type: ORDER_VIDEOGAMES_ALPHATICALLY,
       payload: option,
     });
   };

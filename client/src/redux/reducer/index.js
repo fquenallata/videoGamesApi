@@ -1,17 +1,18 @@
-// reducers/rootReducer.js
 import {
+  RESET_FILTERS,
   GET_VIDEOGAMES,
   GET_VIDEOGAMES_BY_NAME,
   GET_VIDEOGAMES_BY_ID,
   POST_VIDEOGAME,
-  FILTER_VIDEOGAMES_BY_RATING,
-  RESET_FILTERS,
-  FILTER_VIDEOGAMES_ALPHATICALLY,
+  ORDER_VIDEOGAMES_BY_RATING,
+  ORDER_VIDEOGAMES_ALPHATICALLY,
+  FILTER_VIDEOGAMES_BY_ORIGIN,
 } from "../actions/types.js";
 
 import {
   sortVideoGamesByRating,
   sortVideoGamesAlphabetically,
+  filterVideoGamesByOrigin,
 } from "./filterFunctions.js";
 
 let initialState = { allVideoGames: [], allVideoGamesCopy: [] };
@@ -20,14 +21,24 @@ function rootReducer(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case FILTER_VIDEOGAMES_ALPHATICALLY:
-      const allVideoGamesSorted = sortVideoGamesAlphabetically(
+    case FILTER_VIDEOGAMES_BY_ORIGIN:
+      const VideoGamesByOrigin = filterVideoGamesByOrigin(
+        state.allVideoGamesCopy,
+        payload
+      );
+      return {
+        ...state,
+        allVideoGames: VideoGamesByOrigin,
+      };
+
+    case ORDER_VIDEOGAMES_ALPHATICALLY:
+      const videoGamesAlphabetically = sortVideoGamesAlphabetically(
         state.allVideoGames,
         payload
       );
       return {
         ...state,
-        allVideoGames: allVideoGamesSorted,
+        allVideoGames: videoGamesAlphabetically,
       };
 
     case RESET_FILTERS:
@@ -36,14 +47,14 @@ function rootReducer(state = initialState, action) {
         allVideoGames: state.allVideoGamesCopy,
       };
 
-    case FILTER_VIDEOGAMES_BY_RATING:
-      const allVideoGamesFiltered = sortVideoGamesByRating(
+    case ORDER_VIDEOGAMES_BY_RATING:
+      const videoGamesByRating = sortVideoGamesByRating(
         state.allVideoGames,
         payload
       );
       return {
         ...state,
-        allVideoGames: allVideoGamesFiltered,
+        allVideoGames: videoGamesByRating,
       };
 
     case GET_VIDEOGAMES:

@@ -2,8 +2,9 @@ import React, { useRef } from "react";
 import styles from "./FilterBar.module.css";
 import { useDispatch } from "react-redux";
 import {
-  filterVideoGamesByRating,
-  filterVideoGamesAlphabetically,
+  orderVideoGamesByRating,
+  orderVideoGamesAlphabetically,
+  filterVideoGamesByOrigin,
   resetFilters,
 } from "../../redux/actions/actions.js";
 
@@ -11,19 +12,24 @@ function FilterBar(props) {
   const dispatch = useDispatch();
   const selectRefs = useRef([]);
 
-  const handleRatingChange = (event) => {
-    const option = parseInt(event.target.value);
-    dispatch(filterVideoGamesByRating(option));
-  };
-
-  const handleAlphabeticChange = (event) => {
-    const option = parseInt(event.target.value);
-    dispatch(filterVideoGamesAlphabetically(option));
-  };
-
   const handleResetFilters = () => {
     dispatch(resetFilters());
     selectRefs.current.forEach((select) => (select.value = "DEFAULT"));
+  };
+
+  const handleRatingChange = (e) => {
+    const option = parseInt(e.target.value);
+    dispatch(orderVideoGamesByRating(option));
+  };
+
+  const handleAlphabeticChange = (e) => {
+    const option = parseInt(e.target.value);
+    dispatch(orderVideoGamesAlphabetically(option));
+  };
+
+  const handleOriginChange = (e) => {
+    const option = parseInt(e.target.value);
+    dispatch(filterVideoGamesByOrigin(option));
   };
 
   return (
@@ -36,12 +42,13 @@ function FilterBar(props) {
           className={styles.select}
           name="origin"
           defaultValue={"DEFAULT"}
+          onChange={handleOriginChange}
         >
           <option value="DEFAULT" disabled hidden>
             --
           </option>
-          <option value="api">api</option>
-          <option value="created">created</option>
+          <option value="1">api</option>
+          <option value="0">created</option>
         </select>
         <p>Filter by Gender</p>
         <select

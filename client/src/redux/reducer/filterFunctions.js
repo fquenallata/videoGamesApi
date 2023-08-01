@@ -30,3 +30,15 @@ export function sortVideoGamesAlphabetically(videoGames, option) {
 
   return sortedVideoGames;
 }
+
+export function filterVideoGamesByOrigin(videoGames, option) {
+  return videoGames.reduce((filteredVideoGames, game) => {
+    if (
+      (option === 1 && typeof game.id === "number") ||
+      (option === 0 && typeof game.id === "string")
+    ) {
+      filteredVideoGames.push(game);
+    }
+    return filteredVideoGames;
+  }, []);
+}
