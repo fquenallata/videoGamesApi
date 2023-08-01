@@ -1,6 +1,7 @@
 .searchBar {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-around;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.2);
   padding: 20px;

@@ -36,8 +36,6 @@ function Home() {
     dispatch(getGenres());
   }, []);
 
-  console.log(allVideoGames);
-
   return (
     <div className={styles.homeContainer}>
       <SearchBar handleChange={handleChange} handleSubmit={handleSubmit} />
