@@ -4,11 +4,13 @@ import { useParams } from "react-router-dom";
 import styles from "./Detail.module.css";
 import { getVideoGamesById } from "../../redux/actions/actions.js";
 import image_not_found from "./image_not_found.jpg";
+import { useNavigate } from "react-router-dom";
 
 function Detail() {
   const dispatch = useDispatch();
   const { detailId } = useParams();
   const videoGame = useSelector((state) => state.allVideoGames);
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getVideoGamesById(detailId));
@@ -23,9 +25,13 @@ function Detail() {
 
   const genresFormated = genres.join(" - ");
   const platformsFormated = platforms.join(" - ");
+  const handlHome = () => {
+    navigate("/home");
+  };
 
   return (
     <div className={styles.detailContainer}>
+      <button onClick={handlHome}>Home</button>
       <div className={styles.contentContainer}>
         <div className={styles.imageContainer}>
           <img
