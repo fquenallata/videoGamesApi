@@ -6,28 +6,30 @@ import {
   POST_VIDEOGAME,
   FILTER_VIDEOGAMES_BY_RATING,
   RESET_FILTERS,
+  FILTER_VIDEOGAMES_ALPHATICALLY,
 } from "../actions/types.js";
 
+import {
+  sortVideoGamesByRating,
+  sortVideoGamesAlphabetically,
+} from "./filterFunctions.js";
+
 let initialState = { allVideoGames: [], allVideoGamesCopy: [] };
-
-function sortVideoGamesByRating(videoGames, option) {
-  const sortedVideoGames = [...videoGames];
-
-  sortedVideoGames.sort((a, b) => {
-    if (option === 1) {
-      return a.rating - b.rating; // Ordenar de menor a mayor (low rating)
-    } else {
-      return b.rating - a.rating; // Ordenar de mayor a menor (high rating)
-    }
-  });
-
-  return sortedVideoGames;
-}
 
 function rootReducer(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
+    case FILTER_VIDEOGAMES_ALPHATICALLY:
+      const allVideoGamesSorted = sortVideoGamesAlphabetically(
+        state.allVideoGames,
+        payload
+      );
+      return {
+        ...state,
+        allVideoGames: allVideoGamesSorted,
+      };
+
     case RESET_FILTERS:
       return {
         ...state,
@@ -36,7 +38,7 @@ function rootReducer(state = initialState, action) {
 
     case FILTER_VIDEOGAMES_BY_RATING:
       const allVideoGamesFiltered = sortVideoGamesByRating(
-        state.allVideoGamesCopy,
+        state.allVideoGames,
         payload
       );
       return {

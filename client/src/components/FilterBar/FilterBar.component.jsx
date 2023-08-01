@@ -3,6 +3,7 @@ import styles from "./FilterBar.module.css";
 import { useDispatch } from "react-redux";
 import {
   filterVideoGamesByRating,
+  filterVideoGamesAlphabetically,
   resetFilters,
 } from "../../redux/actions/actions.js";
 
@@ -13,6 +14,11 @@ function FilterBar(props) {
   const handleRatingChange = (event) => {
     const option = parseInt(event.target.value);
     dispatch(filterVideoGamesByRating(option));
+  };
+
+  const handleAlphabeticChange = (event) => {
+    const option = parseInt(event.target.value);
+    dispatch(filterVideoGamesAlphabetically(option));
   };
 
   const handleResetFilters = () => {
@@ -54,12 +60,13 @@ function FilterBar(props) {
           className={styles.select}
           name="orderByName"
           defaultValue={"DEFAULT"}
+          onChange={handleAlphabeticChange}
         >
           <option value="DEFAULT" disabled hidden>
             --
           </option>
-          <option value="ascending">Ascending</option>
-          <option value="descending">Descending</option>
+          <option value="0">Ascending</option>
+          <option value="1">Descending</option>
         </select>
         <p>Order by Rating</p>
         <select
