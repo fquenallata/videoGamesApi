@@ -1,11 +1,13 @@
 import {
   RESET_FILTERS,
   GET_VIDEOGAMES,
+  GET_GENRES,
   GET_VIDEOGAMES_BY_NAME,
   GET_VIDEOGAMES_BY_ID,
   POST_VIDEOGAME,
   ORDER_VIDEOGAMES_BY_RATING,
   ORDER_VIDEOGAMES_ALPHATICALLY,
+  FILTER_VIDEOGAMES_BY_GENRE,
   FILTER_VIDEOGAMES_BY_ORIGIN,
 } from "../actions/types.js";
 
@@ -13,14 +15,31 @@ import {
   sortVideoGamesByRating,
   sortVideoGamesAlphabetically,
   filterVideoGamesByOrigin,
+  filterVideoGamesByGenre,
 } from "./filterFunctions.js";
 
-let initialState = { allVideoGames: [], allVideoGamesCopy: [] };
+let initialState = { allVideoGames: [], allVideoGamesCopy: [], allGenres: [] };
 
 function rootReducer(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
+    case FILTER_VIDEOGAMES_BY_GENRE:
+      const VideoGamesByGenre = filterVideoGamesByGenre(
+        state.allVideoGamesCopy,
+        payload
+      );
+      return {
+        ...state,
+        allVideoGames: VideoGamesByGenre,
+      };
+
+    case GET_GENRES:
+      return {
+        ...state,
+        allGenres: payload,
+      };
+
     case FILTER_VIDEOGAMES_BY_ORIGIN:
       const VideoGamesByOrigin = filterVideoGamesByOrigin(
         state.allVideoGamesCopy,

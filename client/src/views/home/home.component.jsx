@@ -7,11 +7,13 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getVideoGames,
   getVideoGamesByName,
+  getGenres,
 } from "../../redux/actions/actions.js";
 
 function Home() {
   const dispatch = useDispatch();
   const allVideoGames = useSelector((state) => state.allVideoGames);
+
   const [searchString, setSearchString] = useState("");
 
   const handleChange = (e) => {
@@ -31,14 +33,16 @@ function Home() {
 
   useEffect(() => {
     dispatch(getVideoGames());
+    dispatch(getGenres());
   }, []);
+
   console.log(allVideoGames);
 
   return (
     <div className={styles.homeContainer}>
       <SearchBar handleChange={handleChange} handleSubmit={handleSubmit} />
       <div className={styles.contentContainer}>
-        <FilterBar allVideoGames={allVideoGames} />
+        <FilterBar />
         <VideoGames allVideoGames={allVideoGames} />
       </div>
     </div>

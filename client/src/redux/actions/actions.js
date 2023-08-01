@@ -1,4 +1,5 @@
 import {
+  GET_GENRES,
   GET_VIDEOGAMES,
   GET_VIDEOGAMES_BY_NAME,
   GET_VIDEOGAMES_BY_ID,
@@ -7,7 +8,7 @@ import {
   ORDER_VIDEOGAMES_BY_RATING,
   ORDER_VIDEOGAMES_ALPHATICALLY,
   FILTER_VIDEOGAMES_BY_ORIGIN,
-  ORDER_VIDEOGAMES_BY_GENRE,
+  FILTER_VIDEOGAMES_BY_GENRE,
 } from "./types.js";
 import axios from "axios";
 
@@ -51,14 +52,14 @@ export function orderVideoGamesAlphabetically(option) {
   };
 }
 
-// export function filterVideoGamesByGenre(allVideoGames) {
-//   return function (dispatch) {
-//     return dispatch({
-//       type: FILTER_VIDEOGAME_BY_GENRE,
-//       payload: allVideoGames,
-//     });
-//   };
-// }
+export function filterVideoGamesByGenre(option) {
+  return function (dispatch) {
+    return dispatch({
+      type: FILTER_VIDEOGAMES_BY_GENRE,
+      payload: option,
+    });
+  };
+}
 
 export function filterVideoGamesByOrigin(option) {
   return function (dispatch) {
@@ -74,6 +75,16 @@ export function getVideoGames() {
     const { data } = await axios.get("http://localhost:3001/videogames");
     return dispatch({
       type: GET_VIDEOGAMES,
+      payload: data,
+    });
+  };
+}
+
+export function getGenres() {
+  return async function (dispatch) {
+    const { data } = await axios.get("http://localhost:3001/genres");
+    return dispatch({
+      type: GET_GENRES,
       payload: data,
     });
   };

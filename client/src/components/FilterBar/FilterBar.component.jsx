@@ -1,20 +1,26 @@
 import React, { useRef } from "react";
 import styles from "./FilterBar.module.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   orderVideoGamesByRating,
   orderVideoGamesAlphabetically,
   filterVideoGamesByOrigin,
+  filterVideoGamesByGenre,
   resetFilters,
 } from "../../redux/actions/actions.js";
 
-function FilterBar(props) {
+function FilterBar() {
   const dispatch = useDispatch();
   const selectRefs = useRef([]);
+  const allGenres = useSelector((state) => state.allGenres);
 
   const handleResetFilters = () => {
     dispatch(resetFilters());
     selectRefs.current.forEach((select) => (select.value = "DEFAULT"));
+  };
+
+  const handleGenreChange = (e) => {
+    dispatch(filterVideoGamesByGenre(e.target.value));
   };
 
   const handleRatingChange = (e) => {
@@ -50,16 +56,22 @@ function FilterBar(props) {
           <option value="1">api</option>
           <option value="0">created</option>
         </select>
-        <p>Filter by Gender</p>
+        <p>Filter by Genre</p>
         <select
           ref={(el) => (selectRefs.current[1] = el)}
           className={styles.select}
           name="genders"
           defaultValue={"DEFAULT"}
+          onChange={handleGenreChange}
         >
           <option value="DEFAULT" disabled hidden>
             --
           </option>
+          {allGenres.map((genre, index) => (
+            <option key={index} value={genre.name}>
+              {genre.name}
+            </option>
+          ))}
         </select>
         <p>Order by Name</p>
         <select

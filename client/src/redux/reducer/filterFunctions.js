@@ -42,3 +42,7 @@ export function filterVideoGamesByOrigin(videoGames, option) {
     return filteredVideoGames;
   }, []);
 }
+
+export function filterVideoGamesByGenre(videoGames, option) {
+  return videoGames.filter((videogame) => videogame.genres.includes(option));
+}
