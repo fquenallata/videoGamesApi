@@ -66,26 +66,6 @@ function Form() {
     navigate("/");
   };
 
-  const handleGenresChange = (e) => {
-    const selectedGenreValue = e.target.value;
-    if (!input.genres.includes(selectedGenreValue)) {
-      setInput((prevInput) => ({
-        ...prevInput,
-        genres: [...prevInput.genres, selectedGenreValue],
-      }));
-    }
-  };
-
-  const handlePlatformsChange = (e) => {
-    const selectedPlatformValue = e.target.value;
-    if (!input.platforms.includes(selectedPlatformValue)) {
-      setInput((prevInput) => ({
-        ...prevInput,
-        platforms: [...prevInput.platforms, selectedPlatformValue],
-      }));
-    }
-  };
-
   useEffect(() => {
     dispatch(getGenres());
   }, []);
@@ -95,24 +75,55 @@ function Form() {
     selectRefs.current.forEach((select) => (select.value = "DEFAULT"));
   };
 
-  const handlHome = () => {
-    navigate("/home");
+  const validate = () => {
+    const validationErrors = { ...error };
+
+    // Validate name
+    if (input.name.trim() === "") {
+      validationErrors.name = "";
+    }
+
+    return validationErrors;
   };
 
-  const handleInputChange = (e) => {
+  const handleChanges = (e, type) => {
     e.preventDefault();
-    const { name, value } = e.target;
-    setInput((prevInput) => ({
-      ...prevInput,
-      [name]: value,
-    }));
+
+    if (type === "genres") {
+      const selectedValue = e.target.value;
+      if (!input.genres.includes(selectedValue)) {
+        setInput((prevInput) => ({
+          ...prevInput,
+          genres: [...prevInput.genres, selectedValue],
+        }));
+      }
+    } else if (type === "platforms") {
+      const selectedValue = e.target.value;
+      if (!input.platforms.includes(selectedValue)) {
+        setInput((prevInput) => ({
+          ...prevInput,
+          platforms: [...prevInput.platforms, selectedValue],
+        }));
+      }
+    } else {
+      const { name, value } = e.target;
+      setInput((prevInput) => ({
+        ...prevInput,
+        [name]: value,
+      }));
+      setError(validate());
+    }
+  };
+
+  const handleHome = () => {
+    navigate("/home");
   };
 
   return (
     <div className={styles.createContainer}>
       <div className={styles.navTitle}>
         <h3>Create a Video Game</h3>
-        <button onClick={handlHome}>Home</button>
+        <button onClick={handleHome}>Home</button>
       </div>
       <form className={styles.form}>
         <div className={styles.data}>
@@ -123,7 +134,7 @@ function Form() {
                 type="text"
                 name="name"
                 value={input.name}
-                onChange={handleInputChange}
+                onChange={handleChanges}
                 className={styles.textInputs}
               />
             </div>
@@ -136,7 +147,7 @@ function Form() {
                 type="text"
                 name="release_date"
                 value={input.release_date}
-                onChange={handleInputChange}
+                onChange={handleChanges}
                 className={styles.textInputs}
               />
             </div>
@@ -150,7 +161,7 @@ function Form() {
                 type="text"
                 name="rating"
                 value={input.rating}
-                onChange={handleInputChange}
+                onChange={handleChanges}
                 className={styles.textInputs}
               />
             </div>
@@ -165,7 +176,7 @@ function Form() {
               type="textArea"
               name="description"
               value={input.description}
-              onChange={handleInputChange}
+              onChange={handleChanges}
               className={styles.textInputs}
             />
             {error.description && <span>{error.description}</span>}
@@ -180,7 +191,7 @@ function Form() {
                 className={styles.select}
                 name="genders"
                 defaultValue={"DEFAULT"}
-                onChange={handleGenresChange}
+                onChange={(e) => handleChanges(e, "genres")}
               >
                 <option value="DEFAULT" disabled hidden>
                   --
@@ -201,7 +212,7 @@ function Form() {
                 className={styles.select}
                 name="genders"
                 defaultValue={"DEFAULT"}
-                onChange={handlePlatformsChange}
+                onChange={(e) => handleChanges(e, "platforms")}
               >
                 <option value="DEFAULT" disabled hidden>
                   --
@@ -225,7 +236,7 @@ function Form() {
                 type="text"
                 name="image"
                 value={input.image}
-                onChange={handleInputChange}
+                onChange={handleChanges}
                 className={styles.textInputs}
               />
             </div>
