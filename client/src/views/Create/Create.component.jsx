@@ -37,6 +37,8 @@ function Form() {
     genres: [],
   });
 
+  console.log(input);
+
   const [error, setError] = useState({
     name: "Please, enter the name",
     image: "Please, enter the image",
@@ -49,7 +51,18 @@ function Form() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(postVideoGame());
+
+    const updatedGenres = input.genres.map((selectedGenre) => {
+      const genre = allGenres.find((genre) => genre.name === selectedGenre);
+      return genre.id;
+    });
+
+    const updatedInput = {
+      ...input,
+      genres: updatedGenres,
+    };
+
+    dispatch(postVideoGame(updatedInput));
     navigate("/");
   };
 

@@ -24,7 +24,7 @@ export function postVideoGame(videogame) {
         payload: [data],
       });
     } catch (error) {
-      console.log(error);
+      alert("Error posting video game: " + error);
     }
   };
 }
