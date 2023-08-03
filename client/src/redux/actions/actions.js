@@ -14,14 +14,18 @@ import axios from "axios";
 
 export function postVideoGame(videogame) {
   return async function (dispatch) {
-    const { data } = await axios.post(
-      "http://localhost:3001/videogames",
-      videogame
-    );
-    return dispatch({
-      type: POST_VIDEOGAME,
-      payload: [data],
-    });
+    try {
+      const { data } = await axios.post(
+        "http://localhost:3001/videogames",
+        videogame
+      );
+      return dispatch({
+        type: POST_VIDEOGAME,
+        payload: [data],
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 }
 
@@ -104,18 +108,10 @@ export function getVideoGamesByName(name) {
 
 export function getVideoGamesById(id) {
   return async function (dispatch) {
-    try {
-      const { data } = await axios.get(
-        `http://localhost:3001/videogames/${id}`
-      );
-      return dispatch({
-        type: GET_VIDEOGAMES_BY_ID,
-        payload: data,
-      });
-    } catch (error) {
-      throw new Error(
-        `Error fetching video game with ID ${id}: ${error.message}`
-      );
-    }
+    const { data } = await axios.get(`http://localhost:3001/videogames/${id}`);
+    return dispatch({
+      type: GET_VIDEOGAMES_BY_ID,
+      payload: data,
+    });
   };
 }
