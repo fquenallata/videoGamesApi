@@ -19,12 +19,15 @@ function Home() {
 
   const handleChange = (e) => {
     e.preventDefault();
-    setSearchString(e.target.value);
+    const inputValue = e.target.value;
+    const regex = /^[a-zA-Z0-9]*$/;
+    if (!regex.test(inputValue)) {
+      setSearchString(inputValue);
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (searchString === "") {
       dispatch(getVideoGames());
     } else {
