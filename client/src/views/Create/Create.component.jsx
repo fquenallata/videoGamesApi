@@ -37,8 +37,6 @@ function Form() {
     genres: [],
   });
 
-  console.log(input);
-
   const [error, setError] = useState({
     name: "Please, enter the name",
     image: "Please, enter the image",
@@ -51,19 +49,27 @@ function Form() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    validate(input);
 
-    const updatedGenres = input.genres.map((selectedGenre) => {
-      const genre = allGenres.find((genre) => genre.name === selectedGenre);
-      return genre.id;
-    });
+    const hasErrors = Object.values(error).some((error) => error !== "");
 
-    const updatedInput = {
-      ...input,
-      genres: updatedGenres,
-    };
+    if (!hasErrors) {
+      const updatedGenres = input.genres.map((selectedGenre) => {
+        const genre = allGenres.find((genre) => genre.name === selectedGenre);
+        return genre.id;
+      });
 
-    dispatch(postVideoGame(updatedInput));
-    navigate("/home");
+      const updatedInput = {
+        ...input,
+        genres: updatedGenres,
+      };
+
+      dispatch(postVideoGame(updatedInput));
+      navigate("/home");
+      window.alert("Posted successfully");
+    } else {
+      window.alert("Insufficient data or no data");
+    }
   };
 
   useEffect(() => {
@@ -72,15 +78,63 @@ function Form() {
 
   const handleResetSelects = (e) => {
     e.preventDefault();
+    const resetInput = {
+      ...input,
+      platforms: [],
+      genres: [],
+    };
+
+    setInput(resetInput);
+    setError(validate(resetInput));
     selectRefs.current.forEach((select) => (select.value = "DEFAULT"));
   };
 
-  const validate = () => {
+  const validate = (updatedInput) => {
     const validationErrors = { ...error };
 
-    // Validate name
-    if (input.name.trim() === "") {
+    if (updatedInput.name) {
       validationErrors.name = "";
+    } else {
+      validationErrors.name = "Please, enter the name";
+    }
+
+    if (updatedInput.image) {
+      validationErrors.image = "";
+    } else {
+      validationErrors.image = "Please, enter the image";
+    }
+
+    if (updatedInput.description) {
+      validationErrors.description = "";
+    } else {
+      validationErrors.description = "Please, enter the description";
+    }
+
+    if (updatedInput.release_date) {
+      validationErrors.release_date = "";
+    } else {
+      validationErrors.release_date = "Please, enter the release date";
+    }
+
+    if (updatedInput.platforms.length === 0) {
+      validationErrors.platforms = "Please, select at least one option";
+    } else {
+      validationErrors.platforms = "";
+    }
+
+    if (updatedInput.genres.length === 0) {
+      validationErrors.genres = "Please, select at least one option";
+    } else {
+      validationErrors.genres = "";
+    }
+
+    const ratingRegex = /^([1-5](\.\d{1,2})?)?$/;
+    if (updatedInput.rating === "") {
+      validationErrors.rating = "The rating is 1-5";
+    } else if (ratingRegex.test(updatedInput.rating)) {
+      validationErrors.rating = "";
+    } else {
+      validationErrors.rating = "Invalid rating format";
     }
 
     return validationErrors;
@@ -89,30 +143,28 @@ function Form() {
   const handleChanges = (e, type) => {
     e.preventDefault();
 
+    let updatedInput = { ...input };
+
     if (type === "genres") {
       const selectedValue = e.target.value;
-      if (!input.genres.includes(selectedValue)) {
-        setInput((prevInput) => ({
-          ...prevInput,
-          genres: [...prevInput.genres, selectedValue],
-        }));
+      if (!updatedInput.genres.includes(selectedValue)) {
+        updatedInput.genres = [...updatedInput.genres, selectedValue];
       }
     } else if (type === "platforms") {
       const selectedValue = e.target.value;
-      if (!input.platforms.includes(selectedValue)) {
-        setInput((prevInput) => ({
-          ...prevInput,
-          platforms: [...prevInput.platforms, selectedValue],
-        }));
+      if (!updatedInput.platforms.includes(selectedValue)) {
+        updatedInput.platforms = [...updatedInput.platforms, selectedValue];
       }
     } else {
       const { name, value } = e.target;
-      setInput((prevInput) => ({
-        ...prevInput,
+      updatedInput = {
+        ...updatedInput,
         [name]: value,
-      }));
-      setError(validate());
+      };
     }
+
+    setInput(updatedInput);
+    setError(validate(updatedInput));
   };
 
   const handleHome = () => {

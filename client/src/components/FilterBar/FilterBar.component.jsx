@@ -17,6 +17,7 @@ function FilterBar(props) {
 
   const handleResetFilters = () => {
     dispatch(resetFilters());
+    handlePageChange(1);
     selectRefs.current.forEach((select) => (select.value = "DEFAULT"));
   };
 
