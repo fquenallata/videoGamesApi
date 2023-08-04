@@ -1,33 +1,14 @@
-import { useState } from "react";
+import React from "react";
 import VideoGame from "../VideoGame/VideoGame.component.jsx";
 import styles from "./VideoGames.module.css";
 
 function VideoGames(props) {
-  const { allVideoGames } = props;
-  const [currentPage, setCurrentPage] = useState(1);
+  const { allVideoGames, pageButtons, currentPage, onPageChange } = props;
+
   const videoGamesPerPage = 15;
-  const totalPages = Math.ceil(allVideoGames.length / videoGamesPerPage);
-
-  const getVideoGamesForPage = (page) => {
-    const startIndex = (page - 1) * videoGamesPerPage;
-    const endIndex = startIndex + videoGamesPerPage;
-    return allVideoGames.slice(startIndex, endIndex);
-  };
-
-  const handlePage = (page) => {
-    setCurrentPage(page);
-  };
-
-  const currentVideoGames = getVideoGamesForPage(currentPage);
-
-  const pageButtons = [];
-  for (let i = 1; i <= totalPages; i++) {
-    pageButtons.push(
-      <button key={i} onClick={() => handlePage(i)}>
-        {i}
-      </button>
-    );
-  }
+  const startIndex = (currentPage - 1) * videoGamesPerPage;
+  const endIndex = startIndex + videoGamesPerPage;
+  const currentVideoGames = allVideoGames.slice(startIndex, endIndex);
 
   return (
     <div className={styles.videoGamesContainer}>
@@ -36,7 +17,17 @@ function VideoGames(props) {
           <VideoGame key={videoGame.id} videoGame={videoGame} />
         ))}
       </div>
-      <div className={styles.buttonsContainer}>{pageButtons}</div>
+      <div className={styles.buttonsContainer}>
+        {pageButtons.map((pageNumber) => (
+          <button
+            key={pageNumber}
+            onClick={() => onPageChange(pageNumber)}
+            className={pageNumber === currentPage ? styles.activePage : ""}
+          >
+            {pageNumber}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }

@@ -63,7 +63,7 @@ function Form() {
     };
 
     dispatch(postVideoGame(updatedInput));
-    navigate("/");
+    navigate("/home");
   };
 
   useEffect(() => {

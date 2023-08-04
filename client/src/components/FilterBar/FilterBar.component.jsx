@@ -9,10 +9,11 @@ import {
   resetFilters,
 } from "../../redux/actions/actions.js";
 
-function FilterBar() {
+function FilterBar(props) {
   const dispatch = useDispatch();
   const selectRefs = useRef([]);
   const allGenres = useSelector((state) => state.allGenres);
+  const { handlePageChange } = props;
 
   const handleResetFilters = () => {
     dispatch(resetFilters());
@@ -20,6 +21,7 @@ function FilterBar() {
   };
 
   const handleGenreChange = (e) => {
+    handlePageChange(1);
     dispatch(filterVideoGamesByGenre(e.target.value));
   };
 
@@ -34,6 +36,7 @@ function FilterBar() {
   };
 
   const handleOriginChange = (e) => {
+    handlePageChange(1);
     const option = parseInt(e.target.value);
     dispatch(filterVideoGamesByOrigin(option));
   };

@@ -18,3 +18,12 @@
 .videoGamesContainer {
   background-color: rgba(0, 0, 0, 0.1);
 }
+
+.activePage {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin: 0 5px;
+  cursor: pointer;
+}
