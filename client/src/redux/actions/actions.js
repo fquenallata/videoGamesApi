@@ -21,7 +21,7 @@ export function postVideoGame(videogame) {
       );
       return dispatch({
         type: POST_VIDEOGAME,
-        payload: [data],
+        payload: data,
       });
     } catch (error) {
       alert("Error posting video game: " + error);

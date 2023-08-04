@@ -12,10 +12,10 @@ const postVideoGame = async (req, res) => {
       rating,
       genres,
     } = req.body;
+
     if (
       name &&
       image &&
-      description &&
       description &&
       platforms &&
       release_date &&
@@ -33,11 +33,21 @@ const postVideoGame = async (req, res) => {
         }),
         "Error creating the new video game"
       );
+
       await handleErrors(
         newVideoGame.addGenres(genres),
         "Error adding the genres relationship"
       );
-      res.status(200).json(newVideoGame);
+
+      const addedGenres = await newVideoGame.getGenres();
+      const genreNames = addedGenres.map((genre) => genre.name);
+
+      const videoGameWithGenres = {
+        ...newVideoGame.toJSON(),
+        genres: genreNames,
+      };
+
+      res.status(200).json([videoGameWithGenres]);
     } else {
       res.status(404).json({ error: "Incorrect or insufficient data" });
     }
@@ -47,4 +57,5 @@ const postVideoGame = async (req, res) => {
     });
   }
 };
+
 module.exports = postVideoGame;
