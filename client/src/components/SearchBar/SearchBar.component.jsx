@@ -1,14 +1,37 @@
 import styles from "./SearchBar.module.css";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import {
+  getVideoGames,
+  getVideoGamesByName,
+} from "../../redux/actions/actions.js";
 
 function SearchBar(props) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [searchString, setSearchString] = useState("");
 
   const handlePost = () => {
     navigate("/post");
   };
 
-  const { handleSubmit, handleChange } = props;
+  const handleSearchChange = (e) => {
+    const inputValue = e.target.value;
+    const regex = /^[a-zA-Z0-9 ]*$/;
+    if (regex.test(inputValue)) {
+      setSearchString(inputValue);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (searchString === "") {
+      dispatch(getVideoGames());
+    } else {
+      dispatch(getVideoGamesByName(searchString));
+    }
+  };
 
   return (
     <div className={styles.searchBar}>
@@ -17,7 +40,8 @@ function SearchBar(props) {
           className={styles.searchInput}
           placeholder="Search..."
           type="search"
-          onChange={handleChange}
+          value={searchString}
+          onChange={handleSearchChange}
         ></input>
         <button
           className={styles.searchButton}
